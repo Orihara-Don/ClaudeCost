@@ -1,7 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <!-- ビルドした人のフォルダのパスを exe に残さない -->
-    <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=/_/</PathMap>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-</Project>

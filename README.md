@@ -6,7 +6,7 @@ Claude Code の利用料金の推計を、macOS のメニューバーとウィ�
 - 集計するのは、そのMacで動いた Claude Code の利用分だけです。
 - 外部とは通信しません。
 
-Windows 版は [windows/README.md](windows/README.md) を見てください。
+Windows 版は [ClaudeCost-for-Windows](https://github.com/Orihara-Don/ClaudeCost-for-Windows) にあります。
 
 ## 必要なもの
 
