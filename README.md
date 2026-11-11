@@ -31,11 +31,26 @@ Claude Code の利用料金の推計を、macOS のメニューバーとウィ�
    cd ClaudeCost && cp Local.xcconfig.example Local.xcconfig
    ```
 
-3. `Local.xcconfig` を自分の値に書き換えます。Team ID は次のコマンドで確認できます。Xcode の Settings > Apple Accounts でサインインしていないと表示されません。
+3. `Local.xcconfig` を自分の値に書き換えます。
+
+   **Team は、自分の名前の「Personal Team」を使ってください。** 会社の Apple Developer アカウントにも入っていると、Xcode には会社のチームも出てきます。会社のチームで署名すると、このアプリのIDが会社のアカウントに登録されてしまいます。
+
+   Team ID は次のコマンドで確認できます。Xcode の Settings > Apple Accounts でサインインしていないと表示されません。
 
    ```bash
-   defaults read com.apple.dt.Xcode IDEProvisioningTeamByIdentifier | grep -E 'teamID|teamName'
+   defaults read com.apple.dt.Xcode IDEProvisioningTeamByIdentifier | grep -E 'teamID|teamType'
    ```
+
+   出力の中から `teamType = "Personal Team";` の直前の行の `teamID` を使います。`teamType = Company;` のものは会社のチームなので使いません。
+
+   ```
+   teamID = ABCDE12345;
+   teamType = Company;              ← 使わない
+   teamID = FGHIJ67890;
+   teamType = "Personal Team";      ← この teamID を使う
+   ```
+
+   `CLAUDECOST_BUNDLE_PREFIX` は、他の人と重ならない値（例: `com.自分のGitHub名.claudecost`）にしてください。
 
 4. Xcode プロジェクトを生成します。`project.yml` を変更したときも、これを実行します。
 
