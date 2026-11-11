@@ -21,7 +21,7 @@ internal static class TrayIcons
             g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
             g.Clear(Color.Transparent);
             var radius = size / 4f;
-            using var path = RoundedRect(new RectangleF(0, 0, size - 1, size - 1), radius);
+            using var path = Drawing.RoundedRect(new RectangleF(0, 0, size - 1, size - 1), radius);
             using var fill = new SolidBrush(overBudget ? Warning : Accent);
             g.FillPath(fill, path);
             using var font = new Font("Segoe UI", size * 0.62f, FontStyle.Bold, GraphicsUnit.Pixel);
@@ -37,18 +37,6 @@ internal static class TrayIcons
         var handle = icon.Handle;
         icon.Dispose();
         DestroyIcon(handle);
-    }
-
-    private static GraphicsPath RoundedRect(RectangleF r, float radius)
-    {
-        var d = radius * 2;
-        var path = new GraphicsPath();
-        path.AddArc(r.X, r.Y, d, d, 180, 90);
-        path.AddArc(r.Right - d, r.Y, d, d, 270, 90);
-        path.AddArc(r.Right - d, r.Bottom - d, d, d, 0, 90);
-        path.AddArc(r.X, r.Bottom - d, d, d, 90, 90);
-        path.CloseFigure();
-        return path;
     }
 
     [DllImport("user32.dll")]
