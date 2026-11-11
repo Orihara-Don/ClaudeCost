@@ -1,0 +1,97 @@
+name: ClaudeCost
+options:
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+# Team とバンドルIDの接頭辞は各自の Local.xcconfig に書く（README 参照）
+configFiles:
+  Debug: Local.xcconfig
+  Release: Local.xcconfig
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Automatic
+targets:
+  ClaudeCost:
+    type: application
+    platform: macOS
+    sources:
+      - App
+      - Shared
+    dependencies:
+      - target: ClaudeCostWidget
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: ClaudeCost
+        LSUIElement: true
+        AppGroupID: $(TeamIdentifierPrefix)claudecost
+        CFBundleURLTypes:
+          - CFBundleURLName: com.claudecost.app
+            CFBundleURLSchemes:
+              - claudecost
+    entitlements:
+      path: App/ClaudeCost.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(TeamIdentifierPrefix)claudecost
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(CLAUDECOST_BUNDLE_PREFIX).app
+        ENABLE_HARDENED_RUNTIME: YES
+  ClaudeCostWidget:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Widget
+      - Shared
+    info:
+      path: Widget/Info.plist
+      properties:
+        CFBundleDisplayName: ClaudeCost
+        AppGroupID: $(TeamIdentifierPrefix)claudecost
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Widget/ClaudeCostWidget.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.application-groups:
+          - $(TeamIdentifierPrefix)claudecost
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(CLAUDECOST_BUNDLE_PREFIX).app.widget
+        ENABLE_HARDENED_RUNTIME: YES
+  # 本体をホストにすると常駐処理が走るため、集計ロジックを直接コンパイルしてテストする
+  ClaudeCostTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests
+        excludes:
+          - Fixtures
+      - App/LogScanner.swift
+      - App/UsageStore.swift
+      - App/Pricing.swift
+      - App/SnapshotBuilder.swift
+      - Shared
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: $(CLAUDECOST_BUNDLE_PREFIX).tests
+schemes:
+  ClaudeCost:
+    build:
+      targets:
+        ClaudeCost: all
+        ClaudeCostWidget: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - ClaudeCostTests
+    archive:
+      config: Release

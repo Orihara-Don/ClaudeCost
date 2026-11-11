@@ -1,0 +1,6 @@
+Local.xcconfig
+*.xcodeproj/
+DerivedData/
+build/
+*.xcarchive
+.DS_Store

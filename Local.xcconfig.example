@@ -1,0 +1,7 @@
+// このファイルを Local.xcconfig にコピーして、自分の値に書き換えてください。
+
+// Apple Developer の Team ID（10文字）。無料の Personal Team でも構いません。
+DEVELOPMENT_TEAM = YOUR_TEAM_ID
+
+// バンドルIDの接頭辞。他の人と重複しないよう、自分の名前などを入れてください。
+CLAUDECOST_BUNDLE_PREFIX = com.yourname.claudecost
