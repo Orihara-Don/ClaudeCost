@@ -79,10 +79,6 @@ Claude Code の利用料金の推計を、macOS のメニューバーとウィ�
 
 会話の本文は保存しません。アンインストールするときは、アプリを終了してから、`/Applications/ClaudeCost.app` と上記のフォルダを削除してください。
 
-## 他のMacに配る場合
-
-Personal Team で署名したアプリは、そのまま他の人のMacでは開けません。各自がこの手順でビルドするか、有料の Apple Developer Program の Developer ID で署名と公証をしてください。
-
 ## ライセンス
 
 [MIT License](LICENSE)
